@@ -1,0 +1,7 @@
+*.dcu
+bin/*
+graphics/*
+*.local
+*.identcache
+QuickReply.dproj
+QuickReply.res
