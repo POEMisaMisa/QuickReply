@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Options>
+    <!--
+        WorkingMode
+
+        0 - click (safer)
+
+            1. Press PopupHotkey (Default: F2)
+            2. Click on element to send element text to chat
+
+        1 - hover (faster, no need to click)
+
+            1. Press PopupHotkey (Default: F2)
+            2. Hover element
+            3. Release PopupHotkey to send element text to chat
+
+        Default and recommended value: 0
+    -->
+    <WorkingMode value="0"/>
+    <!--
+        PopupMethod
+
+        0 - childs [C] are aligned to parent [P] top
+
+            [P]┬[C]
+               ├[C]
+               └[C]
+
+        1 - childs [C] are aligned to height center
+
+               ┌[C]
+            [P]┼[C]
+               └[C]
+
+        Default value: 0
+    -->
+    <PopupMethod value="0"/>
+    <!--
+        PopupDelay
+
+        How long child popup window should stay before open new another child popup
+        This delay used to prevent popup closing by accidently hovering another group \ element
+        Value in milliseconds
+
+        Default value: 115
+    -->
+    <PopupDelay value="115"/>
+    <!--
+        PopupHotkey
+
+        For available keycodes visit : https://msdn.microsoft.com/library/windows/desktop/dd375731
+
+        Advanced users only:
+        Exclusive mode option is used to prevent this key to be used by any other app
+        This is useful when you assign PopupHotkey to VK_LWIN (0x5B), VK_RWIN (0x5C), VK_APPS (0x5D), etc
+
+        toggle used for showing\hiding window by pressing Hotkey button.
+        Can not be used with hover WorkingMode. Toggle mode will set exclusive to true
+
+        Default key is F2, keycode in hexadecimal: 0x71, in integer: 113
+    -->
+    <PopupHotkey value="0x71" exclusive="false" toggle="false"/>
+    <!--
+        EnterChatKey
+
+        For available keycodes visit : https://msdn.microsoft.com/library/windows/desktop/dd375731
+        Change this value only if you remapped chat key in Path of Exile client
+        More info here: http://pathofexile.gamepedia.com/Chat_Console
+        Set to 0 to disable (not recommended)
+
+        Default key is Enter, keycode in hexadecimal: 0x0D, in integer: 13
+    -->
+    <EnterChatKey value="0x0D"/>
+    <!--
+        SendTextKey
+
+        For available keycodes visit : https://msdn.microsoft.com/library/windows/desktop/dd375731
+        Do not change this value if you remapped chat key in Path of Exile client!
+        Set to 0 to disable
+
+        Default key is Enter, keycode in hexadecimal: 0x0D, in integer: 13
+    -->
+    <SendTextKey value="0x0D"/>
+    <!--
+        RestoreCursorPos
+
+        Restore cursor pos after window is closed
+
+        Default value: false
+    -->
+    <RestoreCursorPos value="false"/>
+    <!--
+        CursorSafeOffset
+
+        Cursor offset to left when window is opened
+        -1 - will not change cursor position when window is opened
+
+        Default value: -1
+    -->
+    <CursorSafeOffset value="-1"/>
+    <!--
+        TargetWindowTitle
+
+        Expected active window title. Empty string - will work on every window (recommended only for testing)
+    -->
+    <TargetWindowTitle value="Path of Exile"/>
+    <!--
+        GUISkin
+
+        Width and height values for popup elements
+        Valid ranges:
+            Min - [110 .. Width  .. 400] - Max
+            Default and recommended: 220
+
+            Min - [30  .. Height .. 120] - Max
+            Default and recommended: 55
+
+        Color values for popup elements
+        Can also try this pretty silver color scheme - back_color="0xF5F5F5" outer_frame_color="0x5F5F5F" caption_color="0x444444" hover_color="0xFFDCDC"
+            (Don't accidentally delete "/>" if you copy-paste silver color scheme)
+    -->
+    <GUISkin width="220" height="55" back_color="0xE1F9FF" outer_frame_color="0x0072B3" caption_color="0x1F425A" hover_color="0xFFDCDC"/>
+</Options>

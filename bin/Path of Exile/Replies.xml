@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ChatChannels>
+    <!--
+        Channel
+
+        Available attributes and default values: name="", id=0, symbol="E", color=0, enabled=true, hidden=false, default=false
+
+        More info: http://pathofexile.gamepedia.com/Chat_Console
+        For available keycodes visit : https://msdn.microsoft.com/library/windows/desktop/dd375731
+        You also can use EnterChatKey and SendTextKey config values for KeyPress, KeyRelease and KeyPressAndRelease events
+        You can edit EnterChatKey and SendTextKey config values in Options.xml
+    -->
+    <Channel name="Local" id="1" symbol="L" color="0x24B254" hidden="true">
+        <PreHook>
+            <Step value="EnterChatKey" action="KeyPressAndRelease"/>
+            <Step value="/" action="EnterCharacter"/>
+            <Step value="0x08" action="KeyPressAndRelease"/>
+        </PreHook>
+        <PostHook>
+            <Step value="SendTextKey" action="KeyPressAndRelease"/>
+        </PostHook>
+    </Channel>
+    <Channel name="Whisper" id="2" symbol="@" color="0x845573">
+        <PreHook>
+            <Step value="0xA2" action="KeyPress"/>
+            <Step value="EnterChatKey" action="KeyPressAndRelease"/>
+            <Step value="0xA2" action="KeyRelease"/>
+        </PreHook>
+        <PostHook>
+            <Step value="SendTextKey" action="KeyPressAndRelease"/>
+        </PostHook>
+    </Channel>
+    <Channel name="Global" id="3" symbol="#" color="0x0000E0" hidden="true">
+        <PreHook>
+            <Step value="0xA0" action="KeyPress"/>
+            <Step value="EnterChatKey" action="KeyPressAndRelease"/>
+            <Step value="0xA0" action="KeyRelease"/>
+        </PreHook>
+        <PostHook>
+            <Step value="SendTextKey" action="KeyPressAndRelease"/>
+        </PostHook>
+    </Channel>
+    <Channel name="Trade" id="4" symbol="$" color="0x0070E0" hidden="true">
+        <PreHook>
+            <Step value="EnterChatKey" action="KeyPressAndRelease"/>
+            <Step value="$" action="EnterCharacter"/>
+        </PreHook>
+        <PostHook>
+            <Step value="SendTextKey" action="KeyPressAndRelease"/>
+        </PostHook>
+    </Channel>
+    <Channel name="Party" id="5" symbol="%" color="0xB57D0A" default="true">
+        <PreHook>
+            <Step value="0xA2" action="KeyPress"/>
+            <Step value="0xA0" action="KeyPress"/>
+            <Step value="EnterChatKey" action="KeyPressAndRelease"/>
+            <Step value="0xA0" action="KeyRelease"/>
+            <Step value="0xA2" action="KeyRelease"/>
+        </PreHook>
+        <PostHook>
+            <Step value="SendTextKey" action="KeyPressAndRelease"/>
+        </PostHook>
+    </Channel>
+    <Channel name="Guild" id="6" symbol="&" color="0x7E7E7E" hidden="true">
+        <PreHook>
+            <Step value="EnterChatKey" action="KeyPressAndRelease"/>
+            <Step value="&" action="EnterCharacter"/>
+        </PreHook>
+        <PostHook>
+            <Step value="SendTextKey" action="KeyPressAndRelease"/>
+        </PostHook>
+    </Channel>
+    <Channel name="Raw" id="7" symbol="R" color="0x2E2E2E" hidden="true"/>
+    <Channel name="System" id="8" symbol="S" color="0x7E7E7E" hidden="true">
+        <PreHook>
+            <Step value="EnterChatKey" action="KeyPressAndRelease"/>
+        </PreHook>
+        <PostHook>
+            <Step value="SendTextKey" action="KeyPressAndRelease"/>
+        </PostHook>
+    </Channel>
+</ChatChannels>
+<Elements>
+    <!--
+        Element structure:
+
+        value - text to input in chat
+            Default: empty string
+
+            Macroses:
+                %TOOL_POE_FORUM_THREAD_ID%
+                    will be replaced to tool PoE forum thread id
+
+                %TOOL_VERSION%
+                    will be replaced to tool version number
+
+        channel - chat channel where this missage will be send
+            Default: default Channel from ChatChannels
+
+        allow_channel_change - can user switch target channel or not
+            Default: false
+
+        allowed_channels - set of channel ids, space separated. Example: "1 2 13 44"
+            Default: all enabled and not hidden channels. Only work if allow_channel_change is set to true
+
+        disallowed_channels - set of channel ids, space separated. Example: "1 2 13 44"
+            Default: empty. Only work if allow_channel_change is set to true. Will exclude enabled channels from allowed_channels and not hidden channels
+    -->
+    <Element value="Trading">
+        <Element value="hi, let me finish the map, 1 min, will PM you back" channel="2"/>
+        <Element value="hi, let me finish the map, 5 min, will PM you back" channel="2"/>
+        <Element value="hi, let me finish lab, will PM you back" channel="2"/>
+        <Element value="hi, i'm busy in rotation, will PM you back when done" channel="2"/>
+        <Element value="hi, sure, let me switch league, will PM you" channel="2"/>
+        <Element value="thanks for trading" allow_channel_change="true"/>
+        <Element value="thanks!" allow_channel_change="true"/>
+        <Element value="how many do you need?" allow_channel_change="true"/>
+        <Element value="sure, PM when ready to trade please, I'll wait" channel="2"/>
+        <Element value="Decline">
+            <Element value="sorry, already sold" channel="2"/>
+            <Element value="sorry, not interested" channel="2"/>
+            <Element value="sorry, accepting only currency" channel="2"/>
+            <Element value="sorry, don't want to switch league" channel="2"/>
+        </Element>
+        <Element value="Misc">
+            <Element value="can you give me collateral?" allow_channel_change="true"/>
+        </Element>
+    </Element>
+    <Element value="Emote">
+        <Element value="hahaha" allow_channel_change="true"/>
+        <Element value=":D" allow_channel_change="true"/>
+        <Element value=":)" allow_channel_change="true"/>
+        <Element value="yes!!!" allow_channel_change="true"/>
+        <Element value="¯\_(ツ)_/¯" allow_channel_change="true"/>
+        <Element value="❤" allow_channel_change="true"/>
+        <Element value="❤ ❤ ❤" allow_channel_change="true"/>
+        <Element value="whoops!" allow_channel_change="true"/>
+        <Element value="Negative">
+            <Element value=":(" allow_channel_change="true"/>
+            <Element value="noooo!!!" allow_channel_change="true"/>
+            <Element value="RIP!" allow_channel_change="true"/>
+        </Element>
+    </Element>
+    <Element value="Drop">
+        <Element value="Unique here"/>
+        <Element value="Chaos Orb here"/>
+        <Element value="Vaal Orb here"/>
+        <Element value="Gemcutter's Prism here"/>
+        <Element value="Sextant here"/>
+        <Element value="6S here"/>
+        <Element value="Maps">
+            <Element value="map here"/>
+            <Element value="T10 map here"/>
+            <Element value="T11 map here"/>
+            <Element value="T12 map here"/>
+            <Element value="T13 map here"/>
+            <Element value="T14 map here"/>
+            <Element value="T15 map here"/>
+            <Element value="T16 map here"/>
+            <Element value="Unique map here"/>
+        </Element>
+        <Element value="Rare">
+            <Element value="Silver Coin here"/>
+            <Element value="Perandus Coins here"/>
+        </Element>
+        <Element value="Expensive">
+            <Element value="Divine Orb here!"/>
+            <Element value="Exalted Orb here!"/>
+            <Element value="6L here!"/>
+            <Element value="Mirror of Kalandra here!"/>
+        </Element>
+    </Element>
+    <Element value="Party">
+        <Element value="hello"/>
+        <Element value="hi?"/>
+        <Element value="hi, whose hideout?"/>
+        <Element value="Portals">
+            <Element value="hi, fresh tp please"/>
+            <Element value="fresh tp please"/>
+            <Element value="hi, host hideout, tp up"/>
+            <Element value="tp up"/>
+            <Element value="hi, tp up"/>
+        </Element>
+        <Element value="Orders">
+            <Element value="follow leader"/>
+            <Element value="follow me. Rush or solo = kick"/>
+            <Element value="group"/>
+            <Element value="wait for me please"/>
+            <Element value="wait for people to load"/>
+            <Element value="wait for everyone to load"/>
+            <Element value="wait for leader to load"/>
+            <Element value="let me roll and open boxes"/>
+            <Element value="don't leave map if you skip boss please"/>
+            <Element value="skip"/>
+        </Element>
+        <Element value="Warnings">
+            <Element value="Physical reflect, care!"/>
+            <Element value="Elemental reflect, care!"/>
+        </Element>
+        <Element value="Strongboxes">
+            <Element value="-max res Ice Nova, stay back!"/>
+            <Element value="Ice Nova, stay back!"/>
+            <Element value="Caustic Clouds, stay back!"/>
+            <Element value="Detonate Dead, stay back!"/>
+            <Element value="Beyond monsters can spawn, care!"/>
+            <Element value="I have currency, let me roll boxes please"/>
+            <Element value="vaal box?"/>
+            <Element value="Announce">
+                <Element value="Strongbox here"/>
+                <Element value="Diviner's Strongbox here"/>
+                <Element value="Cartographer's Strongbox here"/>
+                <Element value="Unique Strongbox here"/>
+            </Element>
+        </Element>
+        <Element value="Masters">
+            <Element value="Zana here"/>
+            <Element value="Tora monsters here"/>
+            <Element value="Vorici monsters here"/>
+            <Element value="skip Elreon"/>
+            <Element value="don't revive Catarina monsters please"/>
+        </Element>
+        <Element value="Party done">
+            <Element value="thanks for maps!"/>
+            <Element value="thanks for party!"/>
+            <Element value="party done, thanks for coming!"/>
+        </Element>
+        <Element value="Create party">
+            <Element value="/party_description Mapping party" channel="8"/>
+        </Element>
+        <Element value="Support">
+            <Element value="I'm curser"/>
+            <Element value="I'm defensive aurabot"/>
+            <Element value="I'm offensive aurabot"/>
+            <Element value="I'm ES booster aurabot"/>
+            <Element value="I'm MFing, let me cull bosses please"/>
+            <Element value="I'm MFing, let me cull bosses please. Don't overkill it if you see someone dealing too much damage"/>
+            <Element value="my MF stats are: 100 rarity, 50 quantity"/>
+            <Element value="disable Anger aura please, I'm using Elemental Equilibrium"/>
+        </Element>
+    </Element>
+    <Element value="Commands">
+        <Element value="/hideout" channel="8"/>
+        <Element value="/oos" channel="8"/>
+        <Element value="/passives" channel="8"/>
+        <Element value="/deaths" channel="8"/>
+        <Element value="/cls" channel="8"/>
+        <Element value="Masters">
+            <Element value="/abandon_daily" channel="8"/>
+            <Element value="/claim_crafting_benches" channel="8"/>
+        </Element>
+        <Element value="Uncommon">
+            <Element value="/ladder" channel="8"/>
+            <Element value="/remaining" channel="8"/>
+            <Element value="/dance" channel="8"/>
+            <Element value="/played" channel="8"/>
+            <Element value="/age" channel="8"/>
+            <Element value="/pvp" channel="8"/>
+            <Element value="/reset_xp" channel="8"/>
+            <Element value="/dnd" channel="8"/>
+            <Element value="Fixes">
+                <Element value="/recheck_achievements" channel="8"/>
+                <Element value="/fixmyhelmet" channel="8"/>
+                <Element value="/claim_crafting_benches" channel="8"/>
+            </Element>
+        </Element>
+    </Element>
+    <Element value="Misc">
+        <Element value="I'm replying so fast because I'm using &quot;Path of Exile - QuickReply tool v%TOOL_VERSION%&quot;. Forum thread id: %TOOL_POE_FORUM_THREAD_ID%" channel="2" allow_channel_change="true"/>
+        <Element value="there is a monster counter above map mods now btw - new feature, no need to type /remaining in chat anymore" allow_channel_change="true"/>
+        <Element value="you still typing /remaining in chat? There is a monster counter above map mods now - new feature" allow_channel_change="true"/>
+    </Element>
+</Elements>

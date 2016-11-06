@@ -1,5 +1,5 @@
 *.dcu
-bin/*
+bin/QuickReply.exe
 graphics/*
 *.local
 *.identcache
