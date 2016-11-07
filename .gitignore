@@ -1,7 +1,5 @@
 *.dcu
 bin/QuickReply.exe
-graphics/*
 *.local
 *.identcache
-QuickReply.dproj
 QuickReply.res
