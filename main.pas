@@ -606,61 +606,7 @@ begin
         end else begin
                 ExecutePopupWindowLogic(WorkingMode = WORKING_MODE_HOVER);
         end;
-
-        {
-        // Is modal form shown?
-        if (Assigned(AboutForm)) then begin
-                if (not AboutForm.Visible) then begin
-                        AboutForm.Free();
-                        AboutForm := nil;
-                end;
-        end;
-
-        key_pressed := IsKeyPressed(PopupHotkey);
-
-        if (key_pressed or KeyPressedInExclusiveMode) then begin
-                if (Assigned(AboutForm)) then begin
-                        if (AboutForm.Visible) then begin
-                                AboutForm.Free();
-                                AboutForm := nil;
-                        end;
-                end;
-
-                // If waiting for hotkey release?
-                if (NeedWaitToPopupHotkeyRelease) then begin
-                        exit;
-                end;
-
-                if (ActivePopupForms.Count = 0) then begin
-                        // Check for target window
-                        if ((TargetWindowTitle <> '') and (GetFocusedWindowTitle() <> TargetWindowTitle)) then begin
-                                exit;
-                        end else begin
-                                UpdateFocusedWindowBorder();
-                        end;
-
-                        // Save focused window handle
-                        SavedForegroundWindowHandle := GetForegroundWindow();
-
-                        if (CursorSafeOffset <> -1) then begin
-                                // Save cursor pos
-                                GetCursorPos(SavedCursorPos);
-
-                                // Adjust cursor
-                                SetCursorPos(FocusedWindowBorder.Left + FocusedWindowBorder.Width div 2 - GUISkin.width div 2 - CursorSafeOffset, FocusedWindowBorder.Top + FocusedWindowBorder.Height div 2);
-                        end;
-
-                        // Popup form
-                        PopupForm(ElementsDatabase, 0, -1);
-                end;
-        end else begin
-                KeyPressedInExclusiveMode := false;
-                NeedWaitToPopupHotkeyRelease := false;
-
-                ExecutePopupWindowLogic(WorkingMode = WORKING_MODE_HOVER);
-        end;}
 end;
-
 
 // -----------------------------------------------------------------------------
 procedure TMainForm.ShowAboutWindowMenuClick(Sender: TObject);
@@ -700,7 +646,6 @@ begin
                 ReloadAndActivateConfig(config_folder_name);
         end);
 end;
-
 
 // -----------------------------------------------------------------------------
 procedure TMainForm.EditOptionsXMLMenuClick(Sender: TObject);
@@ -929,8 +874,6 @@ begin
                 end;
                 if (PopupHotkeyInToggleMode) then begin
                         exclusive_mode := true;
-
-                        // Setup toggle logic
                 end;
 
                 KeyPressedInExclusiveMode := false;
