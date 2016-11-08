@@ -47,6 +47,11 @@ type
                 , POPUP_METHOD_CENTERED
         );
 
+        TStartingPositionAlign = (
+                  ALIGN_TO_CENTER                              = 0
+                , ALIGN_TO_START
+        );
+
         TGUISkin = record
                 width, height : integer;
 
@@ -99,6 +104,8 @@ var
         ActivePopupForms : TList<TPopupForm> = nil;
 
         WorkingMode : TWorkingMode = WORKING_MODE_CLICK;
+        StartingPositionAlignX : TStartingPositionAlign = ALIGN_TO_CENTER;
+        StartingPositionAlignY : TStartingPositionAlign = ALIGN_TO_CENTER;
         PopupMethod : TPopupMethod = POPUP_METHOD_CENTERED;
 
         SelectedElement : TPOEPopupMenuElement = nil;
@@ -238,13 +245,16 @@ end;
 procedure UpdateFocusedWindowBorder();
 var
         Handle: THandle;
+        window_info : TWindowInfo;
 begin
         FocusedWindowBorder := Bounds(0, 0, Screen.Width, Screen.Height);
 
         Handle := GetForegroundWindow();
 
         if (Handle <> 0) then begin
-                GetWindowRect(Handle, FocusedWindowBorder);
+                if (GetWindowInfo(Handle, window_info)) then begin
+                        FocusedWindowBorder := window_info.rcClient;
+                end;
         end;
 end;
 
@@ -477,11 +487,25 @@ begin
                 Width  := GUISkin.width;
                 Height := (total_elements_count * GUISkin.height) - ((total_elements_count - 1) * 1);
 
-                Left := FocusedWindowBorder.Left + FocusedWindowBorder.Width div 2 - Width div 2 + (depth * GUISkin.width) - ((depth - 1) * 1);
+                case StartingPositionAlignX of
+                        ALIGN_TO_START : begin
+                                Left := FocusedWindowBorder.Left;
+                        end;
+                        else begin // ALIGN_TO_CENTER
+                                Left := FocusedWindowBorder.Left + FocusedWindowBorder.Width div 2 - Width div 2;
+                        end;
+                end;
+                case StartingPositionAlignY of
+                        ALIGN_TO_START : begin
+                                Top := FocusedWindowBorder.Top;
+                        end;
+                        else begin // ALIGN_TO_CENTER
+                                Top := FocusedWindowBorder.Top + FocusedWindowBorder.Height div 2 - Height div 2;
+                        end;
+                end;
 
-                if (depth = 0) then begin
-                        Top := FocusedWindowBorder.Top + FocusedWindowBorder.Height div 2 - Height div 2;
-                end else begin
+                if (depth <> 0) then begin
+                        Left := Left + (depth * GUISkin.width) - (depth * 1);
                         Top := GetPopupComponentScreenYPos(depth - 1, parent_node_id);
 
                         case PopupMethod of
@@ -825,6 +849,20 @@ procedure ReloadAndActivateConfig(config_folder_name : string);
 var
         OptionChild : TXMLDoc;
         exclusive_mode : boolean;
+        // ---------------------------------------------------------------------
+        function ConvertTextToStartingPositionAlign(text: string): TStartingPositionAlign;
+        begin
+                text := LowerCase(text);
+
+                if (text = 'center') then begin
+                        result := ALIGN_TO_CENTER;
+                end else if (text = 'start') then begin
+                        result := ALIGN_TO_START;
+                end else begin
+                        result := ALIGN_TO_CENTER;
+                end;
+        end;
+        // ---------------------------------------------------------------------
 begin
         HideAllPopupForms();
         UninstallExclusiveHook();
@@ -855,6 +893,13 @@ begin
                 PopupMethod := TPopupMethod(OptionChild.GetAttribDef('value', integer(POPUP_METHOD_TO_PARENT)));
         end;
 
+        // StartingPositionAlign
+        OptionChild := OptionsDatabase.FindChild('StartingPositionAlign');
+        if (Assigned(OptionChild)) then begin
+                StartingPositionAlignX := ConvertTextToStartingPositionAlign(OptionChild.GetAttribDef('x', 'center'));
+                StartingPositionAlignY := ConvertTextToStartingPositionAlign(OptionChild.GetAttribDef('y', 'center'));
+        end;
+
         // PopupDelay
         OptionChild := OptionsDatabase.FindChild('PopupDelay');
         if (Assigned(OptionChild)) then begin
@@ -882,6 +927,8 @@ begin
                 if (exclusive_mode) then begin
                         InstallExclusiveHook();
                 end;
+        end else begin
+                PopupHotkey := 0;
         end;
 
         // EnterChatKey

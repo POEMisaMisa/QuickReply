@@ -36,6 +36,15 @@
     -->
     <PopupMethod value="0"/>
     <!--
+        StartingPositionAlign
+
+        center - align to window center
+        start  - align to window left (for x) and top (for y)
+
+        Default values: x="center" y="center"
+    -->
+    <StartingPositionAlign x="center" y="center"/>
+    <!--
         PopupDelay
 
         How long child popup window should stay before open new another child popup

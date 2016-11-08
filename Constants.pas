@@ -5,7 +5,7 @@ interface
 // -----------------------------------------------------------------------------
 const
         TOOL_NAME                 = 'QuickReply';
-        TOOL_VERSION              = '1.0';
+        TOOL_VERSION              = '1.01';
 
         CONFIG_OPTIONS_FILENAME   = 'Options.xml';
         CONFIG_REPLIES_FILENAME   = 'Replies.xml';
