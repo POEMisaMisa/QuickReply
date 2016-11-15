@@ -10,7 +10,7 @@ const
         CONFIG_OPTIONS_FILENAME   = 'Options.xml';
         CONFIG_REPLIES_FILENAME   = 'Replies.xml';
 
-        TOOL_POE_FORUM_THREAD_ID  = '1764461';
+        TOOL_POE_FORUM_THREAD_ID  = '1766514';
 // -----------------------------------------------------------------------------
 implementation
 // -----------------------------------------------------------------------------
